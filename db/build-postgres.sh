@@ -35,6 +35,9 @@ if [ ! -d $DATADIR ]; then
   mkdir -p $DATADIR
 fi
 
+# create the folder for the backup
+mkdir -p $DATADIR/backup
+
 # get createdb.sql script
 wget --quiet -O - https://github.com/Irstea/filo-science/raw/master/install/pgsql/create_db.sql > /var/lib/postgresql/create_db.sql
 

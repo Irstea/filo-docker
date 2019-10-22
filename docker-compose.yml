@@ -26,6 +26,7 @@ services:
       #- "/home/pi/collec/postgres_data_collec_auto:/var/lib/postgresql"
       #- "/c/postgresData:/var/lib/postgresql:z"
       - filopgdata:/var/lib/postgresql/11/main:Z
+      - ~/filopgbackup:/var/lib/postgresql/backup
     environment:
       - ALLOW_IP_RANGE=0.0.0.0/0
 
@@ -47,8 +48,8 @@ volumes:
     external: true
 
 # filo-science est accessible à cette adresse après 2 minutes (construction de la base de donnée):
-#                   https://filo-docker.local ou https://filo-docker 
-# mon_ip = 127.0.0.1, ou 172.24.1.1, et accepter l'erreur sur le certificat (ajouter aux exceptions) 
+#                   https://filo-docker.local ou https://filo-docker
+# mon_ip = 127.0.0.1, ou 172.24.1.1, et accepter l'erreur sur le certificat (ajouter aux exceptions)
 
 # Login: admin
 # Password: password
