@@ -2,7 +2,7 @@ FROM  debian:buster
 MAINTAINER  Eric Quinton from Irstea/filo-science \
             Filo-Science is published under AGPL license \
             https://github.com/Irstea/filo-science \
-            this script is distributed under BSD license
+            this script is distributed under MIT license
 
 # Required to work
 RUN apt-get -y update &&  apt-get install -y \
@@ -10,13 +10,11 @@ RUN apt-get -y update &&  apt-get install -y \
     dirmngr \
     debian-archive-keyring \
     net-tools \
-    apt-utils
+    apt-utils \
+    vim
 
 # Add postgres debian repositories to apt sources list
-RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-RUN apt-get -y install wget ca-certificates apt-utils
-RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-RUN apt-get -y update
+RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ buster-pgdg main" > /etc/apt/sources.list.d/pgdg.list' &&  apt-get -y install wget ca-certificates apt-utils && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && apt-get -y update
 
 # Install postgres (could be customized to take the good version of postgres...)
 RUN apt-get -y install postgresql-11 postgresql-client-11 postgresql-11-postgis-2.5 netcat

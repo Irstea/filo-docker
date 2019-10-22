@@ -18,7 +18,7 @@ chown root:ssl-cert /etc/ssl/private/*
 chmod -R g+r /etc/ssl/private
 
 ## Générate the SSL certificate for postgres
-openssl req -new -x509 -days 365 -nodes -text -out $DATADIR/server.crt -keyout $DATADIR/server.key -config /etc/ssl/filo.cnf
+openssl req -new -x509 -days 3650 -nodes -text -out $DATADIR/server.crt -keyout $DATADIR/server.key -config /etc/ssl/filo.cnf
 chmod og-rwx $DATADIR/server.key
 chown postgres $DATADIR/server.key
 
