@@ -1,0 +1,59 @@
+version: '3'
+
+# # docker volume create --name filopgdata -d local
+
+services:
+
+  filo-db:
+    build:
+      context: ./db
+      dockerfile: Dockerfile.postgres
+      #labels:
+      #  collec-db: "Postgres 9.6 DB for collec v1.2"
+    command: su - postgres -c "POSTGIS_ENABLE_OUTDB_RASTERS=1 POSTGIS_GDAL_ENABLED_DRIVERS=ENABLE_ALL /usr/lib/postgresql/11/bin/postgres -D /var/lib/postgresql/11/main -c config_file=/etc/postgresql/11/main/postgresql.conf"
+    #command: /start-postgis.sh
+    #command: service postgresql restart
+    #command: /usr/bin/pg_ctlcluster 9.6 main restart
+    #image: 4e148aaae051
+    restart: always
+    ports:
+      - "5433:5432"
+    environment:
+      - PGDATA=/var/lib/postgresql/11/main
+    expose:
+      - 5432
+    volumes:
+      #- "/home/pi/collec/postgres_data_collec_auto:/var/lib/postgresql"
+      #- "/c/postgresData:/var/lib/postgresql:z"
+      - filopgdata:/var/lib/postgresql/11/main:Z
+    environment:
+      - ALLOW_IP_RANGE=0.0.0.0/0
+
+  filo-docker:
+    build:
+      #context: https://github.com/jancelin/docker-collec.git#master:/build
+      context: ./web
+      dockerfile: Dockerfile.apache
+      args:
+        - ZIP=master.zip
+        - REP=filo-master
+    #image: 4e148aaae051
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+      - 632:631
+    links:
+      - filo-db:filo-db
+
+volumes:
+  filopgdata:
+    #driver: local
+    external: true
+
+# filo-science est accessible à cette adresse après 2 minutes (construction de la base de donnée):
+#                   https://mon_ip/collec-master 
+# mon_ip = 127.0.0.1, ou 172.24.1.1, et accepter l'erreur sur le certificat (ajouter aux exceptions) 
+
+# Login: admin
+# Password: password

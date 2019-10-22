@@ -1,0 +1,21 @@
+[req]
+distinguished_name = filo-science
+req_extensions = v3_req
+prompt = no
+[filo-science]
+C = FR
+ST = .
+L = .
+O = .
+OU = .
+CN = filo-science.local
+[v3_req]
+keyUsage = keyEncipherment, dataEncipherment
+extendedKeyUsage = serverAuth
+subjectAltName = @alt_names
+[alt_names]
+DNS.1 = www.filo-science.com
+DNS.2 = www.filo-science.local
+DNS.3 = filo-science
+
+
