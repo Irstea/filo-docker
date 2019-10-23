@@ -103,6 +103,7 @@ Vous pouvez vous connecter avec le login *admin*, mot de passe *password* : il s
 * docker-compose up --build filo-web : recrée les deux images. Attention : la base de données va être recréée !
 * docker update --restart=no filo-docker_filo-web_1 : désactive le démarrage automatique du container
 * docker inspect filo-docker_filo-web_1 : affiche le paramétrage courant du container
+* docker system prune -a : supprime toutes les images, pour réinitialiser docker
 
 ## Sauvegarde de la base de données
 L'image *filo-db* intègre une sauvegarde automatique de la base de données, qui se déclenche tous les jours à 13:00. Vous la retrouverez dans votre ordinateur, dans le dossier *Dossier personnel/filopgbackup*. Pensez à la déplacer vers un autre emplacement sur le réseau, pour éviter de tout perdre en cas de crash ou de vol de l'ordinateur.
