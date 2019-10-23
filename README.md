@@ -62,7 +62,7 @@ CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES
 4f6b43a1261a filo-docker_filo-db "su - postgres -c'P..."   17 hours ago Up 10 minutes 0.0.0.0.0.0:5433->5433->5432/tcp filo-docker_filo-db_1
 ```
 
-**Warning: **the web server exposes ports 80 and 443. If you already have a web server running on your computer, you will need to shut down your local web server before starting the containers.
+**Warning:** the web server exposes ports 80 and 443. If you already have a web server running on your computer, you will need to shut down your local web server before starting the containers.
 
 The postgresql server will be accessible from port 5433, in localhost:
 ```
