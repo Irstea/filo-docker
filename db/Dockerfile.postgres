@@ -39,7 +39,7 @@ RUN chmod 0755 /build-postgres.sh && /build-postgres.sh
 
 # Backup script
 ADD backup.sh /var/lib/postgresql/backup.sh
-RUN sh -c 'echo "0 13 * * * /var/lib/postgresql/backup.sh" | crontab -u postgres -
+RUN sh -c 'echo "0 13 * * * /var/lib/postgresql/backup.sh" | crontab -u postgres -'
 
 ADD start-postgres.sh /start-postgres.sh
 RUN chmod 0755 /start-postgres.sh
