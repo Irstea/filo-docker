@@ -43,7 +43,7 @@ docker volume create --name filopgdata -d local
 ```
 Créez les deux images et les containers associés :
 ```
-docker-compose up --build -d filo-web
+docker-compose up --build
 ```
 Si tout se passe bien, vous retrouverez les images suivantes :
 ```
@@ -93,14 +93,16 @@ Vous pouvez vous connecter avec le login *admin*, mot de passe *password* : il s
 
 ## Quelques commandes utiles de docker
 
+Les commandes *docker-compose* doivent être exécutées depuis le dossier filo-docker-master.
+
 * docker images : affiche la liste des images disponibles
 * docker container ls : affiche la liste des containers
-* docker-compose up -d filo-web : démarre l'image filo-web et filo-db dans leurs containers respectifs, en les recréant
-* docker-compose stop filo-web : arrête le container filo-web
-* docker-compose start filo-web : démarre le container filo-web
+* docker stop filo-docker-master_filo-web_1 : arrête le container contenant l'image filo-web
+* docker start filo-docker-master_filo-web_1 &! : démarre le container précédemment arrêté
+* docker-compose up -d : démarre les filo-web et filo-db dans leurs containers respectifs, en les recréant
 * docker exec -ti filo-docker_filo-web_1 /bin/bash : se connecte au container et permet d'exécuter des commandes
 * docker rmi filo-docker_filo-web --force : supprime brutalement l'image filo-web
-* docker-compose up --build filo-web : recrée les deux images. Attention : la base de données va être recréée !
+* docker-compose up --build : recrée les deux images. Attention : la base de données va être recréée !
 * docker update --restart=no filo-docker_filo-web_1 : désactive le démarrage automatique du container
 * docker inspect filo-docker_filo-web_1 : affiche le paramétrage courant du container
 * docker system prune -a : supprime toutes les images, pour réinitialiser docker
@@ -125,7 +127,16 @@ Une fois connecté, tapez la commande :
 ```
 sudo -s
 ```
-pour obtenir les droits *root*.
+si vous avez besoin de travailler en mode *root*.
+
+## Modifier les droits pour la sauvegarde de la base de données
+
+En étant connecté avec le compte pi :
+```
+cd /home/pi
+sudo chown pi:pi filopgbackup
+chmod 777 filopgbackup
+```
 
 ## Créer un réseau wifi pour connecter directement les terminaux
 
