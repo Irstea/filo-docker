@@ -17,7 +17,7 @@ The scripts provided allow you to install two Docker containers, one to host the
     apt-get update
     apt-get install curl
     curl -fsSL https://get.docker.com/ | sh
-    apt-get install docker-composite
+    apt-get install docker-compose
     systemctl enable docker
     service docker start
     groupadd docker
@@ -44,7 +44,7 @@ docker volume create --name filopgdata -d local
 ```
 Create the two images and the associated containers:
 ```
-docker-composes up --build -d filo-web
+docker-compose up --build -d filo-web
 ```
 If all goes well, you will find the following images:
 ```
