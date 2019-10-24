@@ -135,9 +135,21 @@ Adpatez le contenu du fichier */etc/hostapd/hostapd.conf*, et notamment :
 * wpa_passphrase=votre_mot_de_passe
 
 Editez ensuite le fichier */etc/dnsmasq.conf*, et rajoutez ces lignes :
+```
 server=8.8.8.8
 address=/filo-docker.local/192.168.4.1
+```
+La ligne *server* correspond au serveur d'adresses web (DNS) de Google. Si vous souhaitez utiliser un autre DNS, par exemple celui de votre organisme, modifiez cette ligne.
 
+Redémarrez le Raspberry, et connectez-vous au réseau wifi *filo-docker*. Testez la communication avec l'application, en entrant l'adresse suivante dans un navigateur : https://192.168.4.1. Vous devez accéder à la page d'accueil.
+
+Cette configuration vous permet de charger les dalles Openstreetmap avant de partir sur le terrain :
+* au bureau, connectez le Raspberry au réseau local avec un câble Ethernet
+* connectez votre tablette au Raspberry en wifi
+* lancez l'application, à l'adresse https://192.168.4.1.
+* ouvrez le module *Paramètres>Mise en cache de la cartographie*, et téléchargez les dalles dont vous aurez besoin sur le terrain
+* arrêtez le Raspberry, déconnectez le câble Ethernet, fermez le navigateur de votre tablette
+* redémarrez le Raspberry, reconnectez la tablette au wifi, et rouvrez l'application : les dalles sont accessibles sans que vous soyez connectés à Internet.
 
 
 # Remerciements
