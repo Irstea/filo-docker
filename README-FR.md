@@ -141,7 +141,7 @@ address=/filo-docker.local/192.168.4.1
 ```
 La ligne *server* correspond au serveur d'adresses web (DNS) de Google. Si vous souhaitez utiliser un autre DNS, par exemple celui de votre organisme, modifiez cette ligne.
 
-Redémarrez le Raspberry, et connectez-vous au réseau wifi *filo-docker*. Testez la communication avec l'application, en entrant l'adresse suivante dans un navigateur : https://192.168.4.1. Vous devez accéder à la page d'accueil.
+Redémarrez le Raspberry, et connectez-vous au réseau wifi *filo-docker*. Testez la communication avec l'application, en entrant l'adresse suivante dans un navigateur : https://filo-docker.local. Vous devez accéder à la page d'accueil. En cas de problème d'accès (adresse non reconnue), vous pouvez également vous connecter directement à l'adresse IP : https://192.168.4.1.
 
 Cette configuration vous permet de charger les dalles Openstreetmap avant de partir sur le terrain :
 * au bureau, connectez le Raspberry au réseau local avec un câble Ethernet
