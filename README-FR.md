@@ -127,6 +127,19 @@ sudo -s
 ```
 pour obtenir les droits *root*.
 
+## Créer un réseau wifi pour connecter directement les terminaux
+
+Suivez les instructions définies dans le premier chapitre de ce document : [https://www.raspberrypi.org/documentation/configuration/wireless/access-point.md](https://www.raspberrypi.org/documentation/configuration/wireless/access-point.md) (*Setting up a Raspberry Pi as an access point in a standalone network (NAT)*). 
+Adpatez le contenu du fichier */etc/hostapd/hostapd.conf*, et notamment :
+* ssid=filo-docker
+* wpa_passphrase=votre_mot_de_passe
+
+Editez ensuite le fichier */etc/dnsmasq.conf*, et rajoutez ces lignes :
+server=8.8.8.8
+address=/filo-docker.local/192.168.4.1
+
+
+
 # Remerciements
 
 Les scripts sont issus de ceux élaborés par Julien Ancelin et Christine Plumejeaud-Perreau pour la diffusion via Docker de l'application [Collec-Science](https://github.com/Irstea/collec), et diffusés dans [Github](https://github.com/jancelin/docker-collec). Qu'ils en soient remerciés pour le travail réalisé.

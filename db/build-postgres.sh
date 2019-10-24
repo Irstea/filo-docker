@@ -146,7 +146,7 @@ else
 
     su - postgres -c " createdb -O filo -T template_postgis filo "
     #su - postgres -c " psql filo -c 'CREATE EXTENSION postgis_topology ;'"
-    su - postgres -c " psql filo -f /create_db.sql "
+    su - postgres -c " psql filo -f create_db.sql "
     echo "DB FILO & data created "
 
 fi

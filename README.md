@@ -98,12 +98,12 @@ You can connect with the login *admin*, password *password*: this is a default i
 
 * docker images: displays the list of available images
 * docker container ls: displays the list of containers
-* docker-composes up -d filo-web: starts the filo-web and filo-db image in their respective containers, recreating them
-* docker-composes stop filo-web: stops the filo-web container
-* docker-composes start filo-web: starts the filo-web container
+* docker-compose up -d filo-web: starts the filo-web and filo-db image in their respective containers, recreating them
+* docker-compose stop filo-web: stops the filo-web container
+* docker-compose start filo-web: starts the filo-web container
 * docker exec -ti filo-docker_filo-web_1 /bin/bash: connects to the container and allows to execute commands
 * docker rmi filo-docker_filo-web --force: suddenly deletes the filo-web image
-* docker-composes up --build filo-web: recreates both images. Warning: the database will be recreated!
+* docker-compose up --build filo-web: recreates both images. Warning: the database will be recreated!
 * docker update --restart=no filo-docker_filo-web_1 : disables the automatic start of the container
 * docker inspect filo-docker_filo-web_1: displays the current container settings
 * docker system prune -a : delete all images, to reinitialize docker

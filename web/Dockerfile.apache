@@ -92,7 +92,16 @@ chown www-data $FILODIR/filo-science/param/id_filo-science
 RUN sed -e "s/  <policy domain=\"coder\" rights=\"none\" pattern=\"PDF\" \/>/  <policy domain=\"coder\" rights=\"read|write\" pattern=\"PDF\" \/>/" /etc/ImageMagick-6/policy.xml > /tmp/policy.xml && \
     cp /tmp/policy.xml /etc/ImageMagick-6/
 
+# Setup JAVA_HOME, this is useful for docker commandline and FOP in collec
+# Sur Windows ou Linux amd 64
+# ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk-amd64/
+# Sur Raspberry, Rasbian, architecture ARM
+# ENV JAVA_HOME /usr/lib/jvm/java-1.8.0-openjdk-armel/
+# RUN export JAVA_HOME
 
 #Start apache2
-CMD /usr/sbin/apache2ctl -D FOREGROUND
+ADD start.sh /start.sh
+RUN chmod 0755 /start.sh
+# CMD is not run at build time. Only when the container is started (docker-compose up <SERVICE> or docker run <IMAGEID>)
+CMD /start.sh
 
