@@ -1,5 +1,28 @@
-DOCKER-FILO-SCIENCE
-==================
+% DOCKER-FILO-SCIENCE
+
+- [Présentation](#Pr%C3%A9sentation)
+- [Installation de Docker](#Installation-de-Docker)
+  - [Debian, Ubuntu ou Raspbian](#Debian-Ubuntu-ou-Raspbian)
+  - [Windows](#Windows)
+- [Installation des containers](#Installation-des-containers)
+  - [lancer l'application web](#lancer-lapplication-web)
+    - [Docker est installé dans l'ordinateur qui sert à accéder à l'application](#Docker-est-install%C3%A9-dans-lordinateur-qui-sert-%C3%A0-acc%C3%A9der-%C3%A0-lapplication)
+    - [Docker est installé dans un Raspberry](#Docker-est-install%C3%A9-dans-un-Raspberry)
+  - [Quelques commandes utiles de docker](#Quelques-commandes-utiles-de-docker)
+  - [Sauvegarde de la base de données](#Sauvegarde-de-la-base-de-donn%C3%A9es)
+  - [Mettre à jour l'application](#Mettre-%C3%A0-jour-lapplication)
+    - [Réaliser une sauvegarde de la base de données](#R%C3%A9aliser-une-sauvegarde-de-la-base-de-donn%C3%A9es)
+    - [Mettre à jour la base de données](#Mettre-%C3%A0-jour-la-base-de-donn%C3%A9es)
+    - [Mettre à jour l'application](#Mettre-%C3%A0-jour-lapplication-1)
+- [Utilisation d'un Raspberry Pi](#Utilisation-dun-Raspberry-Pi)
+  - [Installation de Raspbian](#Installation-de-Raspbian)
+  - [Connexion en ssh](#Connexion-en-ssh)
+  - [Installation de Docker et de l'application](#Installation-de-Docker-et-de-lapplication)
+  - [Modifier les droits pour la sauvegarde de la base de données](#Modifier-les-droits-pour-la-sauvegarde-de-la-base-de-donn%C3%A9es)
+  - [Créer un réseau wifi pour connecter directement les terminaux](#Cr%C3%A9er-un-r%C3%A9seau-wifi-pour-connecter-directement-les-terminaux)
+- [Remerciements](#Remerciements)
+- [Licence](#Licence)
+
 # Présentation
 
 Le logiciel [Filo-Science](https://github.com/Irstea/filo-science) permet de saisir les informations issues des pêches électriques de poissons, ainsi que celles de pistage des animaux munis de balises. S'il est conçu pour fonctionner en mode web, son utilisation en mode déconnecté peut parfois être nécessaire, notamment au bord des cours d'eau.
@@ -7,6 +30,8 @@ Le logiciel [Filo-Science](https://github.com/Irstea/filo-science) permet de sai
 Pour cela, le logiciel doit pouvoir être embarqué à bord d'un ordinateur de terrain (portable ou tablette Windows ou Linux, ou Raspberry Pi). La technologie choisie est celle basée sur les containers Docker, pour pouvoir installer une base de données Postgresql et un serveur Web Apache2 pour héberger le code PHP.
 
 Les scripts fournis permettent d'installer deux containers Docker, l'un pour héberger la base de données, l'autre pour le serveur Web.
+
+Cette solution est également utilisable pour exécuter Filo-Science sur tout OS autre (CentOS, Windows, etc.), tout en garantissant le fonctionnement dans l'environnement Debian.
 
 # Installation de Docker
 ## Debian, Ubuntu ou Raspbian
@@ -63,7 +88,7 @@ CONTAINER ID        IMAGE                  COMMAND                  CREATED     
 
 **Attention :** le serveur web expose les ports 80 et 443. Si vous avez déjà un serveur web qui fonctionne dans votre ordinateur, vous devrez arrêter votre serveur web local avant de lancer le démarrage des containers.
 
-Le serveur postgresql sera accessible depuis le port 5433, en localhost :
+Si vous avez installé le client Postgresql dans votre ordinateur, le serveur postgresql sera accessible depuis le port 5433, en localhost :
 ```
 psql -U filo -h localhost -p 5433
 Mot de passe pour l'utilisateur filo : filoPassword
@@ -83,17 +108,17 @@ eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 ```
 Ici, le container s'est vu attribué l'adresse IP *172.19.0.3*.
 
-Ajoutez une ligne dans votre fichiers /etc/hosts (Linux) ou    (Windows) :
+Ajoutez une ligne dans votre fichiers /etc/hosts (Linux) ou  c:\Windows\System32\drivers\etc\hosts  (Windows) :
 ```
 172.19.0.3 filo-docker filo-docker.local
 ```
 Dans votre navigateur, allez sur le site : [https://filo-docker.local](https://filo-docker.local). Acceptez l'exception de sécurité : vous devriez accéder à l'application.
 
-Vous pouvez vous connecter avec le login *admin*, mot de passe *password* : il s'agit d'une installation par défaut.
+Vous pouvez vous connecter avec le login *admin*, mot de passe *password* : il s'agit d'une installation par défaut. Pensez ensuite à supprimer le compte admin ou à en changer le mot de passe, quand vous travaillerez en production (sauf accès uniquement local).
 
 ### Docker est installé dans un Raspberry
 
-Consultez la documentation correspondante  dans le chapitre *Utilisation d'un Raspberry Pi*.
+Consultez la documentation correspondante  dans le chapitre [Utilisation d'un Raspberry Pi](#Utilisation-dun-Raspberry-Pi).
 
 ## Quelques commandes utiles de docker
 
