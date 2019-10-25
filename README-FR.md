@@ -91,6 +91,10 @@ Dans votre navigateur, allez sur le site : [https://filo-docker.local](https://f
 
 Vous pouvez vous connecter avec le login *admin*, mot de passe *password* : il s'agit d'une installation par défaut.
 
+### Docker est installé dans un Raspberry
+
+Consultez la documentation correspondante  dans le chapitre *Utilisation d'un Raspberry Pi*.
+
 ## Quelques commandes utiles de docker
 
 Les commandes *docker-compose* doivent être exécutées depuis le dossier filo-docker-master.
@@ -110,6 +114,68 @@ Les commandes *docker-compose* doivent être exécutées depuis le dossier filo-
 ## Sauvegarde de la base de données
 L'image *filo-db* intègre une sauvegarde automatique de la base de données, qui se déclenche tous les jours à 13:00. Vous la retrouverez dans votre ordinateur, dans le dossier *Dossier personnel/filopgbackup*. Pensez à la déplacer vers un autre emplacement sur le réseau, pour éviter de tout perdre en cas de crash ou de vol de l'ordinateur.
 
+## Mettre à jour l'application
+
+La mise à jour de l'application va être réalisée en deux étapes :
+* d'une part, en mettant à jour la base de données, si c'est nécessaire ;
+* d'autre part, en recréant l'image *filo-web*.
+
+### Réaliser une sauvegarde de la base de données
+```
+docker exec -ti filo-docker-master_filo-db_1 bash
+su - postgres -c /var/lib/postgresql/backup.sh
+```
+Vous devriez retrouver vos fichiers de sauvegarde dans le dossier ~/filopgbackup de votre ordinateur (~ correspond à votre dossier par défaut).
+
+### Mettre à jour la base de données
+
+Récupérez le numéro de la version de la base de données actuelle :
+```
+docker exec -ti filo-docker-master_filo-db_1 bash
+su postgres -c 'psql filo -c "select dbversion_number from filo.dbversion order by dbversion_date desc limit 1"'
+```
+Recherchez dans le dépôt Github s'il existe un script de modification de la base de données (dans [https://github.com/Irstea/filo-science/tree/master/install/pgsql](https://github.com/Irstea/filo-science/tree/master/install/pgsql)). Le script est sous la forme :
+```
+alter-1.1-1.2.sql
+```
+où 1.1 correspond à la version courante de votre base de données, et 1.2 à la version à atteindre.
+
+Dans votre container Docker, téléchargez le script :
+```
+su - postgres
+wget https://github.com/Irstea/filo-science/raw/master/install/pgsql/alter-1.1-1.2.sql
+```
+et exécutez ce script :
+```
+psql -U filo filo -ir alter-1.1-1.2.sql
+```
+
+Si vous avez quelques versions de retard, vous devrez exécuter les scripts successivement pour arriver au niveau de la version courante.
+
+### Mettre à jour l'application
+
+Sauvegardez les fichiers de paramétrage :
+```
+mkdir param
+docker cp filo-docker-master_filo-web_1:/var/www/filo-science/filo-science/param/param.inc.php param/
+docker cp filo-docker-master_filo-web_1:/var/www/filo-science/filo-science/param/id_filo-science param/
+docker cp filo-docker-master_filo-web_1:/var/www/filo-science/filo-science/param/id_filo-science.pub param/
+```
+
+Arrêtez le container, puis recréez l'image :
+```
+docker stop filo-docker-master_filo-web_1
+cd filo-docker-master
+docker compose up --build filo-web &!
+```
+Docker va recréer l'image en chargeant la nouvelle version de l'application. Une fois le container démarré, réintégrez les fichiers de paramétrage sauvegardés précédemment :
+```
+cd ..
+docker cp param/param.inc.php filo-docker-master_filo-web_1:/var/www/filo-science/filo-science/param/
+docker cp param/id_filo-science filo-docker-master_filo-web_1:/var/www/filo-science/filo-science/param/
+docker cp param/id_filo-science.pub filo-docker-master_filo-web_1:/var/www/filo-science/filo-science/param/
+```
+*Attention :* si vous recréez le container, vous devrez relancer la copie des fichiers de paramétrage.
 
 # Utilisation d'un Raspberry Pi
 ## Installation de Raspbian
@@ -129,9 +195,13 @@ sudo -s
 ```
 si vous avez besoin de travailler en mode *root*.
 
+## Installation de Docker et de l'application
+
+Reprenez les instructions détaillées en début de document.
+
 ## Modifier les droits pour la sauvegarde de la base de données
 
-En étant connecté avec le compte pi :
+En étant connecté avec le compte *pi* :
 ```
 cd /home/pi
 sudo chown pi:pi filopgbackup
@@ -140,7 +210,8 @@ chmod 777 filopgbackup
 
 ## Créer un réseau wifi pour connecter directement les terminaux
 
-Suivez les instructions définies dans le premier chapitre de ce document : [https://www.raspberrypi.org/documentation/configuration/wireless/access-point.md](https://www.raspberrypi.org/documentation/configuration/wireless/access-point.md) (*Setting up a Raspberry Pi as an access point in a standalone network (NAT)*). 
+Suivez les instructions définies dans le premier chapitre de ce document : [https://www.raspberrypi.org/documentation/configuration/wireless/access-point.md](https://www.raspberrypi.org/documentation/configuration/wireless/access-point.md) (*Setting up a Raspberry Pi as an access point in a standalone network (NAT)*).
+
 Adpatez le contenu du fichier */etc/hostapd/hostapd.conf*, et notamment :
 * ssid=filo-docker
 * wpa_passphrase=votre_mot_de_passe
