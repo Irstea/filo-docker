@@ -141,6 +141,8 @@ The update of the application will be done in two steps:
 * on the one hand, by updating the database, if necessary;
 * on the other hand, by recreating the image *filo-web*.
 
+For download the code, you must connected to Internet: use a Ethernet cable if your software is installed in a Raspberry-Pi.
+
 ### Make a backup of the database
 ```
 docker exec -ti filo-docker-master_filo-db_1 bash
@@ -168,10 +170,13 @@ wget https://github.com/Irstea/filo-science/raw/master/install/pgsql/alter-1.1-1
 ```
 and execute this script:
 ```
-psql -U filo filo -ir alter-1.1-1.2.sql
+psql -U filo filo -h localhost -f alter-1.2-1.3.sql
 ```
+The default password is: filoPassword
 
 If you are a few versions late, you will have to run the scripts successively to get to the current version level.
+
+Quit the container with ctrl-D ctrl-D.
 
 ### Update the application
 
@@ -187,7 +192,7 @@ Stop the container, and recreate the image:
 ```
 docker stop filo-docker-master_filo-web_1
 cd filo-docker-master
-docker compose up --build filo-web &!
+docker-compose up --build filo-web &!
 ```
 Docker will recreate the image by loading the new version of the application. Once the container is started, reintegrate the previously saved configuration files:
 ```

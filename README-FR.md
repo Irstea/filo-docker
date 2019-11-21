@@ -145,6 +145,8 @@ La mise à jour de l'application va être réalisée en deux étapes :
 * d'une part, en mettant à jour la base de données, si c'est nécessaire ;
 * d'autre part, en recréant l'image *filo-web*.
 
+Pour pouvoir télécharger le code de l'application, votre ordinateur doit être connecté à Internet. Utilisez un câble Ethernet si vous travaillez avec un Raspberry-pi.
+
 ### Réaliser une sauvegarde de la base de données
 ```
 docker exec -ti filo-docker-master_filo-db_1 bash
@@ -172,10 +174,13 @@ wget https://github.com/Irstea/filo-science/raw/master/install/pgsql/alter-1.1-1
 ```
 et exécutez ce script :
 ```
-psql -U filo filo -ir alter-1.1-1.2.sql
+psql -U filo filo -h localhost -f alter-1.2-1.3.sql
 ```
+Le mot de passe par défaut est : filoPassword
 
 Si vous avez quelques versions de retard, vous devrez exécuter les scripts successivement pour arriver au niveau de la version courante.
+
+Quittez le container par appui sur ctrl-D (au besoin, plusieurs fois).
 
 ### Mettre à jour l'application
 
