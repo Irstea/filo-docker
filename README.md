@@ -125,7 +125,7 @@ The *docker-compose* commands must be executed from the filo-docker-master folde
 * docker stop filo-docker-master_filo-web_1 : stops the container containing the filo-web image
 * docker start filo-docker-master_filo-web_1 &! starts the previously stopped container
 * docker-compose up -d: starts the filo-web and filo-db in their respective containers, recreating them
-* docker exec -ti filo-docker_filo-web_1 /bin/bash: connects to the container and allows to execute commands
+* docker exec -ti filo-docker-master_filo-web_1 /bin/bash: connects to the container and allows to execute commands
 * docker rmi filo-docker_filo-web --force: suddenly deletes the filo-web image
 * docker-compose up --build: recreates both images. Warning: the database will be recreated!
 * docker update --restart=no filo-docker_filo-web_1 : disables the automatic start of the container
@@ -200,7 +200,13 @@ cd ..
 docker cp param/param.inc.php filo-docker-master_filo-web_1:/var/www/filo-science/filo-science/param/
 docker cp param/id_filo-science filo-docker-master_filo-web_1:/var/www/filo-science/filo-science/param/
 docker cp param/id_filo-science.pub filo-docker-master_filo-web_1:/var/www/filo-science/filo-science/param/
+docker exec -ti filo-docker-master_filo-web_1 bash
+cd /var/www/filo-science/filo-science/param
+chgrp www-data id_filo-science*
+chmod g+r id_filo-science*
 ```
+Quit the container with Ctrl+D
+
 *Warning:* if you recreate the container, you will have to restart the copy of the configuration files.
 
 # Using a Raspberry Pi
