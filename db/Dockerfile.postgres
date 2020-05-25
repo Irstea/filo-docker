@@ -1,7 +1,7 @@
 FROM  debian:buster
-MAINTAINER  Eric Quinton from Irstea/filo-science \
+MAINTAINER  Eric Quinton from inrae/filo-science \
             Filo-Science is published under AGPL license \
-            https://github.com/Irstea/filo-science \
+            https://github.com/inrae/filo-science \
             this script is distributed under MIT license
 
 # Required to work

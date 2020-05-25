@@ -1,7 +1,7 @@
 FROM  debian:buster
-MAINTAINER  Eric Quinton from Irstea/filo-science \
+MAINTAINER  Eric Quinton from inrae/filo-science \
             Filo-Science is published under AGPL license \
-            https://github.com/Irstea/filo-science \
+            https://github.com/inrae/filo-science \
             this script is distributed under MIT license
 
 RUN apt-get -y update &&  apt-get install -y \
@@ -65,7 +65,7 @@ ARG ZIP=master.zip
 ARG FILODIR=/var/www/filo-science
 
 RUN mkdir $FILODIR
-ADD https://github.com/Irstea/filo-science/archive/$ZIP $FILODIR
+ADD https://github.com/inrae/filo-science/archive/$ZIP $FILODIR
 
 RUN unzip $FILODIR/$ZIP -d $FILODIR/ && \
     ln -s $FILODIR/filo-science-master $FILODIR/filo-science &&\

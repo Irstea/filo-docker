@@ -26,7 +26,7 @@
 This file is translated from REAMDE-FR.md with www.DeepL.com/Translator
 # Presentation
 
-The software[Filo-Science](https://github.com/Irstea/filo-science) allows you to enter information from electric fish fisheries, as well as information on the tracking of animals equipped with tags. If it is designed to operate in web mode, its use in offline mode may sometimes be necessary, especially at the edge of watercourses.
+The software[Filo-Science](https://github.com/inrae/filo-science) allows you to enter information from electric fish fisheries, as well as information on the tracking of animals equipped with tags. If it is designed to operate in web mode, its use in offline mode may sometimes be necessary, especially at the edge of watercourses.
 
 To do this, the software must be able to be embedded on a field computer (Windows or Linux laptop or tablet, or Raspberry Pi). The technology chosen is the one based on Docker containers, to be able to install a Postgresql database and an Apache2 Web server to host the PHP code.
 
@@ -59,7 +59,7 @@ The commands are given for Linux. Remember to adapt the approach to Windows (man
 Download the code of this deposit in a folder on your computer:
 ```
 sudo apt-get install wget unzip
-wget https://github.com/Irstea/filo-docker/archive/master.zip
+wget https://github.com/inrae/filo-docker/archive/master.zip
 unzip master.zip
 cd filo-docker-master
 ```
@@ -157,7 +157,7 @@ Retrieve the version number of the current database version:
 docker exec -ti filo-docker-master_filo-db_1 bash
 su postgres -c 'psql filo -c "select dbversion_number from filo.dbversion order by dbversion_date desc limit 1"'
 ```
-Check the Github repository for a database modification script (in[https://github.com/Irstea/filo-science/tree/master/install/pgsql](https://github.com/Irstea/filo-science/tree/master/install/pgsql)). The script is in the form:
+Check the Github repository for a database modification script (in[https://github.com/inrae/filo-science/tree/master/install/pgsql](https://github.com/inrae/filo-science/tree/master/install/pgsql)). The script is in the form:
 ```
 alter-1.1-1.2.sql
 ```
@@ -166,7 +166,7 @@ where 1.1 is the current version of your database, and 1.2 is the version to be 
 In your Docker container, download the script:
 ```
 su - postgres
-wget https://github.com/Irstea/filo-science/raw/master/install/pgsql/alter-1.1-1.2.sql
+wget https://github.com/inrae/filo-science/raw/master/install/pgsql/alter-1.1-1.2.sql
 ```
 and execute this script:
 ```
@@ -268,7 +268,7 @@ This configuration allows you to load the Openstreetmap tiles before leaving for
 
 # Acknowledgements
 
-The scripts are based on those developed by Julien Ancelin and Christine Plumejeaud-Perreau for the distribution via Docker of the application[Collec-Science](https://github.com/Irstea/collec), and distributed in[Github](https://github.com/jancelin/docker-collec). We would like to thank them for their work.
+The scripts are based on those developed by Julien Ancelin and Christine Plumejeaud-Perreau for the distribution via Docker of the application[Collec-Science](https://github.com/inrae/collec), and distributed in[Github](https://github.com/jancelin/docker-collec). We would like to thank them for their work.
 
 # License
 

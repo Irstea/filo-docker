@@ -8,7 +8,7 @@ POSTGRES="/usr/lib/postgresql/11/bin/postgres"
 INITDB="/usr/lib/postgresql/11/bin/initdb"
 SQLDIR="/usr/share/postgresql/11/contrib/postgis-2.5/"
 LOCALONLY="-c listen_addresses='127.0.0.1, ::1'"
-CREATESCRIPT="https://github.com/Irstea/filo-science/raw/master/install/pgsql/create_db.sql"
+CREATESCRIPT="https://github.com/inrae/filo-science/raw/master/install/pgsql/create_db.sql"
 
 #Christine : ajouter postgres au groupe ssl-cert qui a le droit de lire le repertoire des cles privees
 command addgroup --system 'ssl-cert'
@@ -39,7 +39,7 @@ fi
 mkdir -p $DATADIR/backup
 
 # get createdb.sql script
-wget --quiet -O - https://github.com/Irstea/filo-science/raw/master/install/pgsql/create_db.sql > /var/lib/postgresql/create_db.sql
+wget --quiet -O - https://github.com/inrae/filo-science/raw/master/install/pgsql/create_db.sql > /var/lib/postgresql/create_db.sql
 
 id postgres
 

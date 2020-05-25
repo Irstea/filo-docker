@@ -25,7 +25,7 @@
 
 # Présentation
 
-Le logiciel [Filo-Science](https://github.com/Irstea/filo-science) permet de saisir les informations issues des pêches électriques de poissons, ainsi que celles de pistage des animaux munis de balises. S'il est conçu pour fonctionner en mode web, son utilisation en mode déconnecté peut parfois être nécessaire, notamment au bord des cours d'eau.
+Le logiciel [Filo-Science](https://github.com/inrae/filo-science) permet de saisir les informations issues des pêches électriques de poissons, ainsi que celles de pistage des animaux munis de balises. S'il est conçu pour fonctionner en mode web, son utilisation en mode déconnecté peut parfois être nécessaire, notamment au bord des cours d'eau.
 
 Pour cela, le logiciel doit pouvoir être embarqué à bord d'un ordinateur de terrain (portable ou tablette Windows ou Linux, ou Raspberry Pi). La technologie choisie est celle basée sur les containers Docker, pour pouvoir installer une base de données Postgresql et un serveur Web Apache2 pour héberger le code PHP.
 
@@ -58,7 +58,7 @@ Les commandes sont données pour Linux. Pensez à adapter la démarche à Window
 Téléchargez le code de ce dépôt dans un dossier de votre ordinateur :
 ```
 sudo apt-get install wget unzip
-wget https://github.com/Irstea/filo-docker/archive/master.zip
+wget https://github.com/inrae/filo-docker/archive/master.zip
 unzip master.zip
 cd filo-docker-master
 ```
@@ -161,7 +161,7 @@ Récupérez le numéro de la version de la base de données actuelle :
 docker exec -ti filo-docker-master_filo-db_1 bash
 su postgres -c 'psql filo -c "select dbversion_number from filo.dbversion order by dbversion_date desc limit 1"'
 ```
-Recherchez dans le dépôt Github s'il existe un script de modification de la base de données (dans [https://github.com/Irstea/filo-science/tree/master/install/pgsql](https://github.com/Irstea/filo-science/tree/master/install/pgsql)). Le script est sous la forme :
+Recherchez dans le dépôt Github s'il existe un script de modification de la base de données (dans [https://github.com/inrae/filo-science/tree/master/install/pgsql](https://github.com/inrae/filo-science/tree/master/install/pgsql)). Le script est sous la forme :
 ```
 alter-1.1-1.2.sql
 ```
@@ -170,7 +170,7 @@ où 1.1 correspond à la version courante de votre base de données, et 1.2 à l
 Dans votre container Docker, téléchargez le script :
 ```
 su - postgres
-wget https://github.com/Irstea/filo-science/raw/master/install/pgsql/alter-1.1-1.2.sql
+wget https://github.com/inrae/filo-science/raw/master/install/pgsql/alter-1.1-1.2.sql
 ```
 et exécutez ce script :
 ```
@@ -266,7 +266,7 @@ Cette configuration vous permet de charger les dalles Openstreetmap avant de par
 
 # Remerciements
 
-Les scripts sont issus de ceux élaborés par Julien Ancelin et Christine Plumejeaud-Perreau pour la diffusion via Docker de l'application [Collec-Science](https://github.com/Irstea/collec), et diffusés dans [Github](https://github.com/jancelin/docker-collec). Qu'ils en soient remerciés pour le travail réalisé.
+Les scripts sont issus de ceux élaborés par Julien Ancelin et Christine Plumejeaud-Perreau pour la diffusion via Docker de l'application [Collec-Science](https://github.com/inrae/collec), et diffusés dans [Github](https://github.com/jancelin/docker-collec). Qu'ils en soient remerciés pour le travail réalisé.
 
 # Licence
 
