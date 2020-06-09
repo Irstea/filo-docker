@@ -76,9 +76,6 @@ fi
 if [ -z "$HSTORE" ]; then
   HSTORE=true
 fi
-if [ -z "$TOPOLOGY" ]; then
-  TOPOLOGY=true
-fi
 
 # Custom IP range via docker run -e (https://docs.docker.com/engine/reference/run/#env-environment-variables)
 # Usage is: docker run [...] -e ALLOW_IP_RANGE='192.168.0.0/16'
@@ -118,9 +115,6 @@ then
     if [[ ${HSTORE} == "true" ]]; then
         echo 'HSTORE is only useful when you create the postgis database.'
     fi
-    if [[ ${TOPOLOGY} == "true" ]]; then
-        echo 'TOPOLOGY is only useful when you create the postgis database.'
-    fi
 else
     echo "Postgis is missing, installing now"
     echo "Creating template postgis"
@@ -146,6 +140,8 @@ else
 
     su - postgres -c " createdb -O filo -T template_postgis filo "
     #su - postgres -c " psql filo -c 'CREATE EXTENSION postgis_topology ;'"
+    su - postgres -c " psql filo -c 'CREATE EXTENSION tablefunc WITH SCHEMA public;"
+    su - postgres -c " psql filo -c 'CREATE EXTENSION pgcrypto WITH SCHEMA public;"
     su - postgres -c " psql filo -f create_db.sql "
     echo "DB FILO & data created "
 
