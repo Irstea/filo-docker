@@ -75,16 +75,16 @@ If all goes well, you will find the following images:
 ```
 docker images
 REPOSITORY                 TAG                 IMAGE ID            CREATED             SIZE
-filo-docker_filo-web       latest              834d8fd9f504        18 hours ago        782MB
-filo-docker_filo-db        latest              78d95ff5fea4        19 hours ago        888MB
+filo-docker-master_filo-web       latest              834d8fd9f504        18 hours ago        782MB
+filo-docker-master_filo-db        latest              78d95ff5fea4        19 hours ago        888MB
 ```
 
 And the containers:
 ```
 docker container ls
 CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS                                      NAMES
-125eafce92ac        filo-docker_filo-web   "/bin/sh -c /start.sh"   56 seconds ago      Up 54 seconds       0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp   filo-docker_filo-web_1
-4f6b43a1261a        filo-docker_filo-db    "su - postgres -c 'P…"   17 hours ago        Up 10 minutes       0.0.0.0:5433->5432/tcp                     filo-docker_filo-db_1
+125eafce92ac        filo-docker-master_filo-web   "/bin/sh -c /start.sh"   56 seconds ago      Up 54 seconds       0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp   filo-docker-master_filo-web_1
+4f6b43a1261a        filo-docker-master_filo-db    "su - postgres -c 'P…"   17 hours ago        Up 10 minutes       0.0.0.0:5433->5432/tcp                     filo-docker-master_filo-db_1
 ```
 
 **Caution: **the web server exposes ports 80 and 443. If you already have a web server running on your computer, you will need to shut down your local web server before starting the containers.
@@ -110,6 +110,8 @@ Add a line in your /etc/hosts (Linux) or c:\Windows\System32\drivers\etc\hosts (
 ```
 In your browser, go to the site: [https://filo-docker.local](https://filo-docker.local). Accept the security exception: you should access the application.
 
+If your OS is Windows, the application may run on [https://localhost](https://localhost). You must accept the securities exceptions.
+
 You can connect with the login *admin*, password *password*: this is a default installation. Then remember to delete the admin account or change the password when you are working in production (except for local access only).
 
 ### Docker is installed in a Raspberry
@@ -126,10 +128,10 @@ The *docker-compose* commands must be executed from the filo-docker-master folde
 * docker start filo-docker-master_filo-web_1 &! starts the previously stopped container
 * docker-compose up -d: starts the filo-web and filo-db in their respective containers, recreating them
 * docker exec -ti filo-docker-master_filo-web_1 /bin/bash: connects to the container and allows to execute commands
-* docker rmi filo-docker_filo-web --force: suddenly deletes the filo-web image
+* docker rmi filo-docker-master_filo-web --force: suddenly deletes the filo-web image
 * docker-compose up --build: recreates both images. Warning: the database will be recreated!
 * docker update --restart=no filo-docker_filo-web_1 : disables the automatic start of the container
-* docker inspect filo-docker_filo-web_1: displays the current container settings
+* docker inspect filo-docker-master_filo-web_1: displays the current container settings
 * docker system prune -a : deletes all images, to reset docker
 
 ## Database backup
